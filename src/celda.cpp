@@ -92,24 +92,15 @@ std::vector<Celda *> &Celda::getCeldasVecinas(void) { return celdasVecinas_; }
 // Método para imprimir los distintos tipos de celdas dentro del tablero
 std::ostream &Celda::imprimir(std::ostream &os) {
 
-  if (celdaInicial_ == true) 
-  { 
+  if (celdaInicial_ == true) { 
     os << "\033[1;102m \033[0m"; //Verde claro
-  } 
-  else if (celdaFinal_ == true)
-  {
+  } else if (celdaFinal_ == true) {
     os << "\033[1;101m \033[0m"; //Rojo
-  }
-  else if ((visitada_ == true) && (caminoOptimo_ != true))
-  {
+  } else if ((visitada_ == true) && (caminoOptimo_ != true)) {
     os << "\033[1;100m \033[0m"; //Gris oscuro
-  }
-  else if ((visitada_ == false) && (caminoOptimo_ != true))
-  {
+  } else if ((visitada_ == false) && (caminoOptimo_ != true)) { 
     os << " "; //Negro
-  }
-  else if (caminoOptimo_ == true)
-  {
+  } else if (caminoOptimo_ == true){
     os << "\033[1;103m \033[0m"; //Amarillo
   }
   return os;
