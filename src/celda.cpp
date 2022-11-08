@@ -96,10 +96,10 @@ std::ostream &Celda::imprimir(std::ostream &os) {
     os << "\033[1;102m \033[0m"; //Verde claro
   } else if (celdaFinal_ == true) {
     os << "\033[1;101m \033[0m"; //Rojo
-  } else if ((visitada_ == true) && (caminoOptimo_ != true)) {
-    os << "\033[1;100m \033[0m"; //Gris oscuro
   } else if ((visitada_ == false) && (caminoOptimo_ != true)) { 
     os << " "; //Negro
+  } else if ((visitada_ == true) && (caminoOptimo_ != true)) {
+    os << "\033[1;100m \033[0m"; //Gris oscuro
   } else if (caminoOptimo_ == true){
     os << "\033[1;103m \033[0m"; //Amarillo
   }
