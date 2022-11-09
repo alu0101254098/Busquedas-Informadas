@@ -62,7 +62,7 @@ int main(void) {
   }
 
   // Imprimimos datos por pantalla
-  tablero.algoritmoAEstrella(heuristica);  // Aplicamos algoritmo A*
+  tablero.algoritmoPrimero(heuristica);  // Aplicamos algoritmo A*
   // std::cout << tablero << '\n';
   tablero.salida();
   std::cout

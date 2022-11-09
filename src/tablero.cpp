@@ -250,7 +250,7 @@ void Tablero::algoritmoAEstrella(int heuristica) {
   std::cout << "\033[91m¡No hay solución óptima!\033[0m\n";
 }
 
-void Tablero::algoritmoBFS(int heuristica) {
+void Tablero::algoritmoPrimero(int heuristica) {
   // Empezamos desde el nodo elegido como inicial y asignamos el costo local a 0
   Celda *nodoactual = nodoInicial_;
   nodoactual->setCosteLocal(0.0);
@@ -291,7 +291,16 @@ void Tablero::algoritmoBFS(int heuristica) {
                 << std::endl;
       optimo_ = optimo_ - 1;
       return;
-    }
+        }
+    lista.pop_front();  // Lo eliminamos de la lista abierta ya que lo vamos a
+                        // explorar
+    nodoactual->setVisitada(true);  // Lo ponemos a visitado, que indica que
+                                    // está en la lista cerrada
+    nodoactual->setLista(
+        false);  // Indicamos que no se encuentra en la lista abierta
+    explorado_++;
+    establecerConexiones(nodoactual->getPosX(), nodoactual->getPosY(),
+                         nodoactual);  // Creamos conexiones del nodoactual
 
     lista.pop_front();  // Lo eliminamos de la lista abierta ya que lo vamos a
                         // explorar
