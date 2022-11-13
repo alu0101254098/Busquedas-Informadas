@@ -6,7 +6,7 @@
 
 int main(void) {
   system("clear");
-  int fil = 0, col = 0, heuristica, initx, inity, finalx, finaly;
+  int fil = 0, col = 0, heuristica, initx, inity, finalx, finaly, algoritmo;
 
   std::cout
       << "\n\t\033[1;93m¡Bienvenido al simulador de entorno del taxi!\033[0m\n";
@@ -61,10 +61,36 @@ int main(void) {
     std::cin >> heuristica;
   }
 
+
+  std::cout
+      << "\n\033[0mIndique el \033[96malgitmo\033[0m a usar: "
+         "(\033[96m1\033[0m)A*, (\033[96m2\033[0m)PrimeroelMejor: \033[96m";
+  std::cin >> algoritmo;
+
+  while ((algoritmo != 1) && (algoritmo != 2)) {
+    std::cout
+        << "\033[91mOpción no válida.\033[0m Inténtelo de nuevo: \033[96m";
+    std::cin >> algoritmo;
+  }
+
+  if (algoritmo == 1){
+  // Imprimimos datos por pantalla
+  tablero.algoritmoAEstrella(heuristica);  // Aplicamos algoritmo A*
+  // std::cout << tablero << '\n';
+  tablero.salida();
+  }
+
+  else if (algoritmo == 2){
   // Imprimimos datos por pantalla
   tablero.algoritmoPrimero(heuristica);  // Aplicamos algoritmo A*
   // std::cout << tablero << '\n';
-  tablero.salida();
+  tablero.salida();// Imprimimos datos por pantalla
+
+  }
+
+  
+
+
   std::cout
       << "\033[1;93mEl camino amarillo muestra la ruta más óptima.\033[0m\n";
   std::cout << "\033[96mNodos explorados:\033[0m " << tablero.explorado_
