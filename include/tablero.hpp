@@ -29,10 +29,6 @@ class Tablero {
   void setNodoFinal(int i, int j);
   void algoritmoAEstrella(int heuristica);
   void algoritmoPrimero(int heuristica);
-
-  void algoritmoPrimeroProfe (int heuristica);
-  void algoritmoPrimeroProfe (int heuristica, Celda* nodoactual);
-
   float heuristicaManhattan(Celda *a, Celda *b);
   float heuristicaEuclides(Celda *a, Celda *b);
   friend std::ostream &operator<<(std::ostream &os, const Tablero &Tablero);
