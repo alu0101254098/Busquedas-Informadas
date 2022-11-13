@@ -226,7 +226,7 @@ void Tablero::algoritmoAEstrella(int heuristica) {
                                    heuristicaEuclides(vecino, nodoFinal_));
           }
         }
-      } else {  // Si está visitado (en la lista cerrada)
+      } /* else {  // Si está visitado (en la lista cerrada)
         if (costelocal < vecino->getCosteLocal()) {
           vecino->setVisitada(false);  // Lo quitamos de la lista cerrada(bool
                                        // de visitado a falso)
@@ -243,7 +243,7 @@ void Tablero::algoritmoAEstrella(int heuristica) {
                                    heuristicaEuclides(vecino, nodoFinal_));
           }
         }
-      }
+      }*/
     }
   }
   tiempo_ = clock() - tiempo_;
@@ -251,7 +251,7 @@ void Tablero::algoritmoAEstrella(int heuristica) {
 }
 
 void Tablero::algoritmoPrimero(int heuristica) {
-  // Empezamos desde el nodo elegido como inicial y asignamos el costo local a 0
+    // Empezamos desde el nodo elegido como inicial y asignamos el costo local a 0
   Celda *nodoactual = nodoInicial_;
   nodoactual->setCosteLocal(0.0);
 
@@ -270,7 +270,6 @@ void Tablero::algoritmoPrimero(int heuristica) {
   nodoactual->setLista(true);
 
   while (!lista.empty()) {
-    
     lista.sort([](const Celda *a, const Celda *b) {
       return a->getCosteGlobal() < b->getCosteGlobal();
     });  // Ordenamos de menor a mayor coste global la lista abierta
@@ -291,16 +290,7 @@ void Tablero::algoritmoPrimero(int heuristica) {
                 << std::endl;
       optimo_ = optimo_ - 1;
       return;
-        }
-    lista.pop_front();  // Lo eliminamos de la lista abierta ya que lo vamos a
-                        // explorar
-    nodoactual->setVisitada(true);  // Lo ponemos a visitado, que indica que
-                                    // está en la lista cerrada
-    nodoactual->setLista(
-        false);  // Indicamos que no se encuentra en la lista abierta
-    explorado_++;
-    establecerConexiones(nodoactual->getPosX(), nodoactual->getPosY(),
-                         nodoactual);  // Creamos conexiones del nodoactual
+    }
 
     lista.pop_front();  // Lo eliminamos de la lista abierta ya que lo vamos a
                         // explorar
@@ -311,10 +301,40 @@ void Tablero::algoritmoPrimero(int heuristica) {
     explorado_++;
     establecerConexiones(nodoactual->getPosX(), nodoactual->getPosY(),
                          nodoactual);  // Creamos conexiones del nodoactual
+
+    Celda* minor = nullptr;
+    for (int w = 0; w < nodoactual->getCeldasVecinas().size(); w++) {
+      Celda *vecino = nodoactual->getCeldasVecinas().at(
+          w);  // En cada iteración cogemos un vecino distinto del nodo actual
+      float costelocal =
+          nodoactual->getCosteLocal() +
+          1.0;  // Al desplazarse a la celda vecina, aumentamos su coste en 1
+
+      // Decidimos que heurística usar
+      if (heuristica == 1)
+        vecino->setCosteGlobal(heuristicaManhattan(vecino, nodoFinal_));
+
+      if (heuristica == 2)
+        vecino->setCosteGlobal(heuristicaEuclides(vecino, nodoFinal_));
+
+      if (vecino->getVisitada() == false) {  // Si no está en la lista cerrada
+        if (minor == nullptr || minor->getCosteGlobal() > vecino->getCosteGlobal()) {
+          minor = vecino;
+        }
+      }
+    }
+
+    if (minor->getLista() == false) {   // Ni en la lista abierta
+      lista.push_back(minor);           // Lo colocamos en la lista abierta
+      minor->setLista(true);
+    }
+
+    minor->setPadre(nodoactual);
   }
   tiempo_ = clock() - tiempo_;
   std::cout << "\033[91m¡No hay solución óptima!\033[0m\n";
 }
+
 
 // Método sobrecarga para imprimir el tablero
 std::ostream &operator<<(std::ostream &os, Tablero &Tablero) {
